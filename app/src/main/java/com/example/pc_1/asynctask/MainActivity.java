@@ -58,9 +58,16 @@ public class MainActivity extends AppCompatActivity {
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             int contador = values[0];
-            String cadena = "Contador: "+contador;
+            String cadena = "Contador: "+ contador;
             texto.setText(cadena);
             texto.setTextSize(contador);
+            for(int j=0; j<=30; j++){
+                texto.setTextColor(getColor(R.color.color1));
+                for(int H=30; H<=contador; H++){
+                    texto.setTextColor(getColor(R.color.color2));
+                }
+            }
+
         }
 
         @Override
