@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
     ///METODO PARA VALIDAR LA CONEXION A INTERNET
     //****************************************
     public Boolean inOnLine(){
+        //permite acceder al servicio para verificar la conexion a internet
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        //permite obtener la informacion de la conexion
         NetworkInfo network = connectivityManager.getActiveNetworkInfo();
 
         if(network != null && network.isConnectedOrConnecting()) {
@@ -45,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
     }
     //***********************************************
     ///llamar al metodo que se encuentra arriba!!!
-
+    //Evento boton cargar informacion
     public void onButton(View view) {
         if(inOnLine()){
             MyTask task =new MyTask();
+            //EJECUTAR MI TAREA Y SE PARA COMO PARAMETRO LA URL DE LOS DATOS
             task.execute("http://186.116.10.48/zeusacad/img/usuarios.xml");
             //
 
@@ -56,8 +59,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Sin Conexion", Toast.LENGTH_SHORT).show();
         }
     }
-
+    //Evento cargar datoss
     public void cargarDatos(String dato){
+        ///
         texto.setText(dato+"\n");
     }
 
@@ -67,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            //habilita boton cargar y lo pone visike
             super.onPreExecute();
             cargador.setVisibility(View.VISIBLE);
             cargarDatos("Iniciar Datos");
@@ -75,12 +80,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             //se obtendra la url que esta llegando como parametro
+            //se crea variable
             String contend = null;
             try {
+                //lo que retorne la clase de conexion, se lo asigno como variable, el try catch maneja errore
                 contend = HttpManager.getData(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //retorna lo que hay en conexxion, se va a metodo PostExecute
             return contend;
         }
 
@@ -94,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+            //quita el cargador y manda a llamar a los datos
             super.onPostExecute(s);
             cargador.setVisibility(View.GONE);
             cargarDatos(s);
