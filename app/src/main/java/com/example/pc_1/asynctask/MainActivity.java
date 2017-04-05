@@ -13,6 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar cargador;
@@ -44,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
     //***********************************************
     ///llamar al metodo que se encuentra arriba!!!
 
-    public void onButto(View view) {
+    public void onButton(View view) {
         if(inOnLine()){
             MyTask task =new MyTask();
-            task.execute();
+            task.execute("http://186.116.10.48/zeusacad/img/usuarios.xml");
             //
 
         }else{
@@ -72,7 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            return null;
+            //se obtendra la url que esta llegando como parametro
+            String contend = null;
+            try {
+                contend = HttpManager.getData(params[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return contend;
         }
 
         @Override
