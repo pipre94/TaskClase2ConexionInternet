@@ -46,56 +46,39 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButto(View view) {
         if(inOnLine()){
+            MyTask task =new MyTask();
+            task.execute();
             //
-            Toast.makeText(this, "my tarea",Toast.LENGTH_SHORT).show();
+
         }else{
             Toast.makeText(this, "Sin Conexion", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void onButtonStart(View view){
-        new MyTask().execute(60);
+    public void cargarDatos(String dato){
+        texto.setText(dato+"\n");
     }
 
-    public class MyTask extends AsyncTask<Integer, Integer, String>{
+
+
+    public class MyTask extends AsyncTask<String, String, String>{
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             cargador.setVisibility(View.VISIBLE);
+            cargarDatos("Iniciar Datos");
         }
 
         @Override
-        protected String doInBackground(Integer... params) {
-
-            int max = params[0];
-
-            for(int i=0; i<=max; i++){
-
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                publishProgress(i);
-            }
-
-            return "Fin";
+        protected String doInBackground(String... params) {
+            return null;
         }
 
         @Override
-        protected void onProgressUpdate(Integer... values) {
+        protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            int contador = values[0];
-            String cadena = "Contador: "+ contador;
-            texto.setText(cadena);
-            texto.setTextSize(contador);
-            for(int j=0; j<=30; j++){
-                texto.setTextColor(getColor(R.color.color1));
-            }
-                for(int H=31; H<=contador; H++){
-                    texto.setTextColor(getColor(R.color.color2));
-                }
+            cargarDatos (values[0]);
 
 
         }
@@ -103,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            texto.append("\n"+s);
-            cargador.setVisibility(View.INVISIBLE);
+            cargador.setVisibility(View.GONE);
+            cargarDatos(s);
         }
     }
 }
