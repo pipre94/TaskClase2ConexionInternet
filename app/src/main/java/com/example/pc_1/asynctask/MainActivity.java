@@ -63,10 +63,11 @@ public class MainActivity extends AppCompatActivity {
             texto.setTextSize(contador);
             for(int j=0; j<=30; j++){
                 texto.setTextColor(getColor(R.color.color1));
-                for(int H=30; H<=contador; H++){
+            }
+                for(int H=31; H<=contador; H++){
                     texto.setTextColor(getColor(R.color.color2));
                 }
-            }
+
 
         }
 
